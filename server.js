@@ -2,13 +2,13 @@ const express = require('express')
 const mysql = require('mysql')
 let cookieParser = require('cookie-parser');
 const cors = require('cors')
-let dotenv = require('dotenv').config()
+//let dotenv = require('dotenv').config()
 
 const connection = mysql.createConnection({
-    host: dotenv.parsed.HOST,
-    user: dotenv.parsed.USER,
-    password: dotenv.parsed.PASS,
-    database: dotenv.parsed.DB
+    host: process.env.HOST, //dotenv.parsed.HOST,
+    user: process.env.USER, //dotenv.parsed.USER,
+    password: process.env.PASS, //dotenv.parsed.PASS,
+    database: process.env.DB, //dotenv.parsed.DB
 })
 
 connection.connect();
