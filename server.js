@@ -2,13 +2,12 @@ const express = require('express')
 const mysql = require('mysql')
 let cookieParser = require('cookie-parser');
 const cors = require('cors')
-//let dotenv = require('dotenv').config()
 
 const connection = mysql.createConnection({
-    host: process.env.HOST, //dotenv.parsed.HOST,
-    user: process.env.USER, //dotenv.parsed.USER,
-    password: process.env.PASS, //dotenv.parsed.PASS,
-    database: process.env.DB, //dotenv.parsed.DB
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASS,
+    database: process.env.DB
 })
 
 connection.connect();
@@ -17,8 +16,11 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-app.use(cors());
-app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: ["https://password-manager-8280f.web.app/"]
+}));
+app.use(cookieParser(process.env.SECRET));
 
 app.post('/login', (req, res) => {
     connection.query(`SELECT Username, Password FROM User WHERE Username=? AND Password=?`, [req.body.username, req.body.password], (err, rows, fields) => {
@@ -44,7 +46,7 @@ app.post('/register', (req, res) => {
 
 
 app.get('/accessData', (req, res) => {
-    res.json({"OK":req.cookie})
+    res.json({"OK":req.cookies})
 })
 
 app.listen(port, () => {
