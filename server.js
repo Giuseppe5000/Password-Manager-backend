@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "https://password-manager-8280f.web.app/"
+  origin: "*"
 };
 
 app.use(cors(corsOptions));
