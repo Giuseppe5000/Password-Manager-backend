@@ -1,54 +1,20 @@
-const express = require('express')
-const mysql = require('mysql')
-let cookieParser = require('cookie-parser');
-const cors = require('cors')
-
-const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    password: process.env.PASS,
-    database: process.env.DB
-})
-
-connection.connect();
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
-const port = 3001;
 
+var corsOptions = {
+  origin: "https://password-manager-8280f.web.app/"
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors({
-    credentials: true,
-    origin: ["https://password-manager-8280f.web.app/"]
-}));
-app.use(cookieParser(process.env.SECRET));
+app.use(express.urlencoded({ extended: true }));
 
-app.post('/login', (req, res) => {
-    connection.query(`SELECT Username, Password FROM User WHERE Username=? AND Password=?`, [req.body.username, req.body.password], (err, rows, fields) => {
-        if (rows[0]){
-            res.cookie('name', req.body.username).send('cookie set');
-        }
-        else {
-            res.sendStatus(404);
-        }
-    })
-})
+require("./app/routes/routes.js")(app);
 
-app.post('/register', (req, res) => {
-    connection.query(`INSERT INTO User(Username, Password) VALUES(?,?)`, [req.body.username, req.body.password], (err, result) => {
-        if (err) {
-            res.json({ "state": "failed" });
-        }
-        else {
-            res.json({ "state": "success" });
-        }
-    })
-})
-
-
-app.get('/accessData', (req, res) => {
-    res.json({"OK":req.cookies})
-})
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+// Set port, listen for requests
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
