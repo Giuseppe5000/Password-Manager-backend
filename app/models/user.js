@@ -1,27 +1,23 @@
-const mysql = require('mysql')
+const dbConn = require("../config/db.config.js")
+const config = require("../config/auth.config");
+const jwt = require("jsonwebtoken");
 
-// DB connect
-//let dotenv = require('dotenv').config()
-const connection = mysql.createConnection({
-    host: process.env.HOST, //dotenv.parsed.HOST,
-    user: process.env.USER, //dotenv.parsed.USER,
-    password: process.env.PASS, //dotenv.parsed.PASS,
-    database: process.env.DB, //dotenv.parsed.DB
-})
-
-connection.connect();
 
 // User model
 class User {
     constructor(user) {
         this.username = user.username;
         this.password = user.password;
+        this.token = user.token;
     }
 
     static login(user, result) {
-        connection.query(`SELECT Username, Password FROM User WHERE Username=? AND Password=?`, [user.username, user.password], (err, rows) => {
+        dbConn.query(`SELECT Username, Password FROM User WHERE Username=? AND Password=?`, [user.username, user.password], (err, rows) => {
             if (rows[0]) {
-                result(null, { token: user.username });
+                let token = jwt.sign({ id: user.username }, config.secret, {
+                    expiresIn: 86400 // 24 hours
+                });
+                result(null, { token })
             }
             else {
                 result(err, null);
@@ -31,7 +27,7 @@ class User {
     }
 
     static register(user, result) {
-        connection.query(`INSERT INTO User(Username, Password) VALUES(?,?)`, [user.username, user.password], (err) => {
+        dbConn.query(`INSERT INTO User(Username, Password) VALUES(?,?)`, [user.username, user.password], (err) => {
             if (err) {
                 result(err, null);
                 return;
@@ -41,6 +37,18 @@ class User {
             }
         });
     }
+
+    static logged(user, result) {
+        jwt.verify(user.token, config.secret, (err, decoded) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, {"status":"logged"});
+        });
+
+    }
+
 }
 
 
