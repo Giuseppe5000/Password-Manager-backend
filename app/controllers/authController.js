@@ -6,8 +6,7 @@ exports.login = (req, res) => {
   // Create user
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
-    token: req.headers["x-access-token"]
+    password: req.body.password
   });
 
   User.login(user, (err, data) => {
@@ -28,7 +27,7 @@ exports.register = (req, res) => {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
-    token: req.headers["x-access-token"]
+    email: req.body.email
   });
 
   User.register(user, (err, data) => {
@@ -47,8 +46,6 @@ exports.logged = (req, res) => {
 
   // Create user
   const user = new User({
-    username: req.body.username,
-    password: req.body.password,
     token: req.headers['authorization']
   });
 
