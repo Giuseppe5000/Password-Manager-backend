@@ -2,6 +2,9 @@ const dbConn = require("../config/db.config.js")
 const config = require("../config/auth.config");
 const jwt = require("jsonwebtoken");
 
+const jwtVerify = (token, callback) => {
+    jwt.verify(token, config.secret, callback);
+}
 
 // User model
 class User {
@@ -41,27 +44,39 @@ class User {
         });
     }
 
-    static logged(user, result) {
-        jwt.verify(user.token, config.secret, (err, decoded) => {
+    static passwords(user, result) {
+        jwtVerify(user.token, (err, decoded) => {
             if (err) {
                 result(err, null);
                 return;
             }
-            result(null, { "status": "logged" });
+            dbConn.query(`SELECT * FROM Password WHERE IdUser = ?`, [decoded.id], (err, rows) => {
+                if (rows) {
+                    let passwords = []
+                    rows.forEach(row => {
+                        passwords.push({ "title": row.Title, "username": row.Username, "password": row.Password, "url": row.Url })
+                    });
+                    result(null, { passwords })
+                }
+                else {
+                    result(err, null);
+                    return;
+                }
+            });
         });
 
     }
 
-    // static passwords(user, result) {
-    //     jwt.verify(user.token, config.secret, (err, decoded) => {
-    //         if (err) {
-    //             result(err, null);
-    //             return;
-    //         }
-    //         result(null, { "passwords": "boh, aff, sdgtw" });
-    //     });
+    static addPassword(user, result) {
+        jwtVerify(user.token, (err, decoded) => {
+            if(err) {
+                result(err, null);
+                return;
+            }
+            result(null, { "addPassword": "true" });
+        });
 
-    // }
+    }
 
 }
 

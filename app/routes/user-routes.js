@@ -4,8 +4,8 @@ module.exports = app => {
     let router = require("express").Router();
 
     // User routes
-    //router.get("/passwords", userController.passwords);
-    // router.post("/addPasswords", userController.addPasswords);
+    router.get("/passwords", userController.passwords);
+    router.post("/addPassword", userController.addPassword);
 
 
     app.use('/user', router);

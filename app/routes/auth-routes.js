@@ -6,7 +6,6 @@ module.exports = app => {
     // Auth routes
     router.post("/login", authController.login);
     router.post("/register", authController.register);
-    router.get("/logged", authController.logged);
 
 
     app.use('/auth', router);
