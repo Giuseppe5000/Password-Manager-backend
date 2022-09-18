@@ -1,3 +1,3 @@
 module.exports = {
-    secret: "sdgnoog-123412-asdgfwj"
-  };
+    secret:  process.env.SECRET
+};

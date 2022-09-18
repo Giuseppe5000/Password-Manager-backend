@@ -5,7 +5,7 @@ module.exports = app => {
 
     // User routes
     router.get("/passwords", userController.passwords);
-    router.post("/addPassword", userController.addPassword);
+    router.post("/addPasswordItem", userController.addPasswordItem);
 
 
     app.use('/user', router);

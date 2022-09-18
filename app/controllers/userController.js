@@ -1,4 +1,5 @@
 const User = require("../models/user.js");
+const PasswordItem = require("../models/passwordItem.js");
 
 // Passwords
 exports.passwords = (req, res) => {
@@ -21,21 +22,23 @@ exports.passwords = (req, res) => {
 
 };
 
-// Add password
-exports.addPassword = (req, res) => {
+// Add passwordItem
+exports.addPasswordItem = (req, res) => {
 
-  // Create user
-  const user = new User({
+  // Create PasswordItem 
+  const passwordItem = new PasswordItem({
+    title: req.body.title,
     username: req.body.username,
     password: req.body.password,
+    url: req.body.url,
     token: req.headers['authorization']
   });
 
-  User.addPassword(user, (err, data) => {
+  PasswordItem.addPasswordItem(passwordItem, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "(addPasswords) Some error occurred"
+          err.message || "(addPasswordItem) Some error occurred"
       });
     else res.send(data);
   });

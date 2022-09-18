@@ -1,10 +1,7 @@
-const dbConn = require("../config/db.config.js")
-const config = require("../config/auth.config");
+const dbConn = require("../config/db.config.js");
 const jwt = require("jsonwebtoken");
-
-const jwtVerify = (token, callback) => {
-    jwt.verify(token, config.secret, callback);
-}
+const config = require("../config/auth.config");
+const jwtVerify = require("../jwt/jwtVerify.js");
 
 // User model
 class User {
@@ -63,17 +60,6 @@ class User {
                     return;
                 }
             });
-        });
-
-    }
-
-    static addPassword(user, result) {
-        jwtVerify(user.token, (err, decoded) => {
-            if(err) {
-                result(err, null);
-                return;
-            }
-            result(null, { "addPassword": "true" });
         });
 
     }
