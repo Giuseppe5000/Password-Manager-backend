@@ -49,7 +49,7 @@ exports.logged = (req, res) => {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
-    token: req.headers["x-access-token"]
+    token: req.headers['authorization']
   });
 
   User.logged(user, (err, data) => {
