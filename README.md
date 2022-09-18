@@ -20,7 +20,7 @@
 &nbsp;
 
 ### Register
-<pre>curl -X POST -d '{"username":"username", "password":"secret", "email":"email@mail.com"}' -H "Content-Type: application/json" http://localhost:3000/auth/register</pre>
+<pre>curl -X POST -d '{"username":"username", "password":"secret", "email":"email@mail.com"}' -H "Content-Type: application/json" https://password-manager-backend.vercel.app/auth/register</pre>
 
 &nbsp;
 
@@ -30,4 +30,4 @@
 &nbsp;
 
 ### AddPasswordItem
-<pre>curl -X POST -d '{"title":"title","username":"username","password":"secret","url":"www.github.com"}' -H "Content-Type: application/json" -H "Authorization: TOKEN" http://localhost:3000/user/addPasswordItem</pre>
+<pre>curl -X POST -d '{"title":"title","username":"username","password":"secret","url":"www.github.com"}' -H "Content-Type: application/json" -H "Authorization: TOKEN" https://password-manager-backend.vercel.app/user/addPasswordItem</pre>
