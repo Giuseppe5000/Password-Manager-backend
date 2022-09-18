@@ -11,7 +11,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-require("./app/routes/routes.js")(app);
+require("./app/routes/auth-routes.js")(app);
+require("./app/routes/user-routes.js")(app);
+
 
 // Set port, listen for requests
 const PORT = process.env.PORT || 3000;
