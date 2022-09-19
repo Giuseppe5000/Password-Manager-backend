@@ -1,5 +1,5 @@
 const dbConn = require("../config/db.config.js")
-const jwtVerify = require("../jwt/jwtVerify.js");
+const jwtFunctions = require("../jwt/jwtFunctions.js");
 
 // PasswordItem model
 class PasswordItem {
@@ -12,7 +12,7 @@ class PasswordItem {
     }
 
     static addPasswordItem(passwordItem, result) {
-        jwtVerify(passwordItem.token, (err, decoded) => {
+        jwtFunctions.verify(passwordItem.token, (err, decoded) => {
             if (err) {
                 result(err, null);
                 return;

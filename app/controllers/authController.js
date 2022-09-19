@@ -11,7 +11,7 @@ exports.login = (req, res) => {
 
   User.login(user, (err, data) => {
     if (err)
-      res.status(500).send({
+      res.status(404).send({
         message:
           err.message || "(Login) Some error occurred"
       });
@@ -32,7 +32,7 @@ exports.register = (req, res) => {
 
   User.register(user, (err, data) => {
     if (err)
-      res.status(500).send({
+      res.status(404).send({
         message:
           err.message || "(Register) Some error occurred"
       });

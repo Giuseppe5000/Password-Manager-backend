@@ -13,7 +13,7 @@ exports.passwords = (req, res) => {
 
   User.passwords(user, (err, data) => {
     if (err)
-      res.status(500).send({
+      res.status(404).send({
         message:
           err.message || "(Passwords) Some error occurred"
       });
@@ -36,7 +36,7 @@ exports.addPasswordItem = (req, res) => {
 
   PasswordItem.addPasswordItem(passwordItem, (err, data) => {
     if (err)
-      res.status(500).send({
+      res.status(404).send({
         message:
           err.message || "(addPasswordItem) Some error occurred"
       });

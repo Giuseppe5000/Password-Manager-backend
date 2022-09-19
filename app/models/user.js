@@ -1,7 +1,5 @@
 const dbConn = require("../config/db.config.js");
-const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config");
-const jwtVerify = require("../jwt/jwtVerify.js");
+const jwtFunctions = require("../jwt/jwtFunctions.js");
 
 // User model
 class User {
@@ -17,13 +15,15 @@ class User {
 
             if (rows[0]) {
                 const id = rows[0].IdUser
-                let token = jwt.sign({ id }, config.secret, {
-                    expiresIn: 86400 // 24 hours
-                });
+                let token = jwtFunctions.sign({ id }, {expiresIn: 86400}) // 24 hours
                 result(null, token);
             }
-            else {
+            else if (err) {
                 result(err, null);
+                return;
+            }
+            else {
+                result({"message":"Username or password wrong"}, null);
                 return;
             }
         });
@@ -53,7 +53,7 @@ class User {
     }
 
     static passwords(user, result) {
-        jwtVerify(user.token, (err, decoded) => {
+        jwtFunctions.verify(user.token, (err, decoded) => {
             if (err) {
                 result(err, null);
                 return;
