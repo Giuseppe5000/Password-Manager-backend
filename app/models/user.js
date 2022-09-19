@@ -30,15 +30,26 @@ class User {
     }
 
     static register(user, result) {
-        dbConn.query(`INSERT INTO User(Username, Password, Email) VALUES(?,?,?)`, [user.username, user.password, user.email], (err) => {
-            if (err) {
+        dbConn.query(`SELECT * FROM User WHERE Username=?`, [user.username], (err, rows) => {
+            if (rows[0]) {
+                result(null, { "state": "username alredy used" });
+            }
+            else if (err){
                 result(err, null);
-                return;
             }
             else {
-                result(null, { "state": "success" });
+                dbConn.query(`INSERT INTO User(Username, Password, Email) VALUES(?,?,?)`, [user.username, user.password, user.email], (err) => {
+                    if (err) {
+                        result(err, null);
+                        return;
+                    }
+                    else {
+                        result(null, { "state": "success" });
+                    }
+                });
             }
-        });
+        })
+
     }
 
     static passwords(user, result) {
