@@ -15,7 +15,7 @@ exports.login = (req, res) => {
         message:
           err.message || "(Login) Some error occurred"
       });
-    else res.send(data);
+    else res.cookie("token", data, {httpOnly: true}).send();
   });
   
 };

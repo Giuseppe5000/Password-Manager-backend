@@ -20,7 +20,7 @@ class User {
                 let token = jwt.sign({ id }, config.secret, {
                     expiresIn: 86400 // 24 hours
                 });
-                result(null, { token })
+                result(null, token);
             }
             else {
                 result(err, null);
