@@ -33,7 +33,7 @@ class User {
     static register(user, result) {
         dbConn.query(`SELECT * FROM User WHERE Username=?`, [user.username], (err, rows) => {
             if (rows[0]) {
-                result(null, { "state": "username alredy used" });
+                result({ "message": "username alredy used" }, null);
             }
             else if (err){
                 result(err, null);
