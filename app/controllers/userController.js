@@ -44,3 +44,23 @@ exports.addPasswordItem = (req, res) => {
   });
 
 };
+
+
+// Logged
+exports.logged = (req, res) => {
+
+  // Create user
+  const user = new User({
+    token: req.headers['authorization']
+  });
+
+  User.logged(user, (err, data) => {
+    if (err)
+      res.status(404).send({
+        message:
+          err.message || "(Logged) Some error occurred"
+      });
+    else res.send(data);
+  });
+
+};

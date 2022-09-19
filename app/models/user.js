@@ -16,7 +16,7 @@ class User {
 
             if (rows[0]) {
                 const id = rows[0].IdUser
-                let token = jwtFunctions.sign({ id }, {expiresIn: 86400}) // 24 hours
+                let token = jwtFunctions.sign({ id }, { expiresIn: 86400 }) // 24 hours
                 result(null, { token });
             }
             else if (err) {
@@ -24,7 +24,7 @@ class User {
                 return;
             }
             else {
-                result({"message":"Username or password wrong"}, null);
+                result({ "message": "Username or password wrong" }, null);
                 return;
             }
         });
@@ -35,7 +35,7 @@ class User {
             if (rows[0]) {
                 result({ "message": "username alredy used" }, null);
             }
-            else if (err){
+            else if (err) {
                 result(err, null);
             }
             else {
@@ -72,6 +72,17 @@ class User {
                     return;
                 }
             });
+        });
+
+    }
+
+    static logged(user, result) {
+        jwt.verify(user.token, config.secret, (err) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            result(null, { "status": "logged" });
         });
 
     }

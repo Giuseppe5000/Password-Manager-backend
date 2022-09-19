@@ -7,6 +7,7 @@
 ## User routes
 * #### /user/passwords (GET)
 * #### /user/addPasswordItem (POST)
+* #### /user/logged (GET)
 
 ***
 
@@ -28,3 +29,7 @@
 
 ### AddPasswordItem
 <pre>curl -X POST -d '{"title":"title","username":"username","password":"secret","url":"www.github.com"}' -H "Content-Type: application/json" -H "Authorization: TOKEN" https://password-manager-backend.vercel.app/user/addPasswordItem</pre>
+
+
+### AddPasswordItem
+<pre>curl -X GET -H "Authorization: TOKEN" https://password-manager-backend.vercel.app/user/logged</pre>
