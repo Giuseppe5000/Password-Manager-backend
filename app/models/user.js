@@ -12,7 +12,7 @@ class User {
     }
 
     static login(user, result) {
-        dbConn.query(`SELECT * FROM User WHERE Username=? AND Password=?`, [user.username, SHA256(user.password)], (err, rows) => {
+        dbConn.query(`SELECT * FROM User WHERE Username=? AND Password=?`, [user.username, String(SHA256(user.password))], (err, rows) => {
 
             if (rows[0]) {
                 const id = rows[0].IdUser
@@ -39,7 +39,7 @@ class User {
                 result(err, null);
             }
             else {
-                dbConn.query(`INSERT INTO User(Username, Password, Email) VALUES(?,?,?)`, [user.username, SHA256(user.password), user.email], (err) => {
+                dbConn.query(`INSERT INTO User(Username, Password, Email) VALUES(?,?,?)`, [user.username, String(SHA256(user.password)), user.email], (err) => {
                     if (err) {
                         result(err, null);
                         return;
