@@ -77,7 +77,7 @@ class User {
     }
 
     static logged(user, result) {
-        jwt.verify(user.token, config.secret, (err) => {
+        jwtFunctions.verify(user.token, (err) => {
             if (err) {
                 result(err, null);
                 return;
