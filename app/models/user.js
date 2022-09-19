@@ -16,7 +16,7 @@ class User {
             if (rows[0]) {
                 const id = rows[0].IdUser
                 let token = jwtFunctions.sign({ id }, {expiresIn: 86400}) // 24 hours
-                result(null, token);
+                result(null, { token });
             }
             else if (err) {
                 result(err, null);

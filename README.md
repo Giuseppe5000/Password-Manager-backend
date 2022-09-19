@@ -15,7 +15,7 @@
 &nbsp;
 
 ### Login
-<pre>curl -X POST -v -d '{"username":"username", "password":"password"}' -H "Content-Type: application/json" https://password-manager-backend.vercel.app/auth/login</pre>
+<pre>curl -X POST -d '{"username":"username", "password":"password"}' -H "Content-Type: application/json" https://password-manager-backend.vercel.app/auth/login</pre>
 
 
 ### Register
