@@ -64,3 +64,22 @@ exports.logged = (req, res) => {
   });
 
 };
+
+// Info
+exports.info = (req, res) => {
+
+  // Create user
+  const user = new User({
+    token: req.headers['authorization']
+  });
+
+  User.info(user, (err, data) => {
+    if (err)
+      res.status(404).send({
+        message:
+          err.message || "(Logged) Some error occurred"
+      });
+    else res.send(data);
+  });
+
+};

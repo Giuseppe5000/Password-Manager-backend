@@ -7,6 +7,7 @@ module.exports = app => {
     router.get("/passwords", userController.passwords);
     router.post("/addPasswordItem", userController.addPasswordItem);
     router.get("/logged", userController.logged);
+    router.get("/info", userController.info);
 
 
     app.use('/user', router);

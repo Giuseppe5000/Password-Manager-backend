@@ -87,6 +87,25 @@ class User {
 
     }
 
+    static info(user, result) {
+        jwtFunctions.verify(user.token, (err, decoded) => {
+            if (err) {
+                result(err, null);
+                return;
+            }
+            dbConn.query(`SELECT * FROM User WHERE IdUser = ?`, [decoded.id], (err, rows) => {
+                if (rows[0]) {
+                    result(null, { "username": rows[0].Username, "email": rows[0].Email});
+                }
+                else {
+                    result(err, null);
+                    return;
+                }
+            });
+        });
+
+    }
+
 }
 
 
