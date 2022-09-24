@@ -8,6 +8,7 @@
 * #### /user/passwords (GET)
 * #### /user/addPasswordItem (POST)
 * #### /user/logged (GET)
+* #### /user/info (GET)
 
 ***
 
@@ -16,7 +17,7 @@
 &nbsp;
 
 ### Login
-<pre>curl -X POST -d '{"username":"username", "password":"password"}' -H "Content-Type: application/json" https://password-manager-backend.vercel.app/auth/login</pre>
+<pre>curl -X POST -d '{"username":"username", "password":"secret"}' -H "Content-Type: application/json" https://password-manager-backend.vercel.app/auth/login</pre>
 
 
 ### Register
@@ -33,3 +34,7 @@
 
 ### Logged
 <pre>curl -X GET -H "Authorization: TOKEN" https://password-manager-backend.vercel.app/user/logged</pre>
+
+
+### Info
+<pre>curl -X GET -H "Authorization: TOKEN" https://password-manager-backend.vercel.app/user/info</pre>
